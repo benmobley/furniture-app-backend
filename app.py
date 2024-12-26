@@ -1,7 +1,9 @@
 import db
 from flask import Flask, request
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 
 @app.route("/products.json")
 def index():
