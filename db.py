@@ -26,7 +26,7 @@ def initial_setup():
     conn.commit()
     print("Table created successfully")
 
-    products_seed_data = [
+    photos_seed_data = [
         ("Chair", "Sit on it", 400, "Dining Room"),
         ("Table", "Put stuff on here", 768, "Dining Room"),
         ("Desk", "Study here", 200, "Office"),
@@ -36,7 +36,7 @@ def initial_setup():
         INSERT INTO products (name, description, price, category)
         VALUES (?,?,?,?)
         """,
-        products_seed_data,
+        ps_seed_data,
     )
     conn.commit()
     print("Seed data created successfully")
@@ -52,6 +52,17 @@ def products_all():
     ).fetchall()
     conn.close()  # Close the connection to avoid resource leaks
     return [dict(row) for row in rows]
+
+def products_find_by_id(id):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        SELECT * FROM products
+        WHERE id = ?
+        """,
+        (id,),
+    ).fetchone()
+    return dict(row)
 
 if __name__ == "__main__":
     initial_setup()
