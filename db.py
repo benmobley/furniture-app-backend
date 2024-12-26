@@ -28,7 +28,7 @@ def initial_setup():
     conn.commit()
     print("Table created successfully")
 
-    products_seed_data = [
+    photos_seed_data = [
         ("Chair", "Sit on it", 400, "Dining Room"),
         ("Table", "Put stuff on here", 768, "Dining Room"),
         ("Desk", "Study here", 200, "Office"),
@@ -38,21 +38,12 @@ def initial_setup():
         INSERT INTO products (name, description, price, category)
         VALUES (?,?,?,?)
         """,
-        products_seed_data,
+        ps_seed_data,
     )
     conn.commit()
     print("Seed data created successfully")
 
     conn.close()
-
-    def products_all():
-    conn = connect_to_db()
-    rows = conn.execute(
-        """
-        SELECT * FROM products
-        """
-    ).fetchall()
-    return [dict(row) for row in rows]
 
 
 if __name__ == "__main__":
