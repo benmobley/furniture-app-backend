@@ -30,9 +30,9 @@ def initial_setup():
     print("Table created successfully")
 
     products_seed_data = [
-        ("Chair", "image.jpg", "Sit on it", 400, "Dining Room", 0.1, 440),
-        ("Table", "image.jpg", "Put stuff on here", 768, "Dining Room", 0.1, 844.8),
-        ("Desk", "image.jpg", "Study here", 200, "Office", 0.1, 220),
+        ("Chair", "https://s7d2.scene7.com/is/image/OCProduction/rh13?$Large$", "Sit on it", 400, "Dining Room", 0.1, 440),
+        ("Table", "https://images.pickawood.com/data/nettece-2021/honza-examples/paris-et-echtholzfurnier-eiche-natur-geoelt-angle-legn.jpeg", "Put stuff on here", 768, "Dining Room", 0.1, 844.8),
+        ("Desk", "https://www.sundays-company.com/cdn/shop/products/DES-JD-001-024_1_500-1793x1008-07b956d.jpg?v=1691198754&width=4000", "Study here", 200, "Office", 0.1, 220),
     ]
     conn.executemany(
         """
