@@ -53,5 +53,18 @@ def products_all():
     conn.close()  # Close the connection to avoid resource leaks
     return [dict(row) for row in rows]
 
+def products_create(name, description, price, category):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        INSERT INTO products (name, description, price, category)
+        VALUES (?, ?, ?, ?)
+        RETURNING *
+        """,
+        (name, description, price, category),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
+
 if __name__ == "__main__":
     initial_setup()
