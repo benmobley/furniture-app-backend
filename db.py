@@ -1,11 +1,9 @@
 import sqlite3
 
-
 def connect_to_db():
     conn = sqlite3.connect("database.db")
     conn.row_factory = sqlite3.Row
     return conn
-
 
 def initial_setup():
     conn = connect_to_db()
@@ -21,7 +19,7 @@ def initial_setup():
           name TEXT,
           description TEXT,
           price INTEGER,
-          category TEXT,
+          category TEXT
         );
         """
     )
@@ -45,15 +43,15 @@ def initial_setup():
 
     conn.close()
 
-    def products_all():
+def products_all():
     conn = connect_to_db()
     rows = conn.execute(
         """
         SELECT * FROM products
         """
     ).fetchall()
+    conn.close()  # Close the connection to avoid resource leaks
     return [dict(row) for row in rows]
-
 
 if __name__ == "__main__":
     initial_setup()
