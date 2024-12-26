@@ -14,3 +14,7 @@ def create():
     price = request.form.get("price")
     category = request.form.get("category")
     return db.products_create(name, description, price, category)
+
+@app.route("/products/<id>.json")
+def show(id):
+    return db.products_find_by_id(id)
