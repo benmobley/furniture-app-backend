@@ -54,6 +54,5 @@ def initial_setup():
     ).fetchall()
     return [dict(row) for row in rows]
 
-
 if __name__ == "__main__":
     initial_setup()
