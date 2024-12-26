@@ -45,6 +45,15 @@ def initial_setup():
 
     conn.close()
 
+    def products_all():
+    conn = connect_to_db()
+    rows = conn.execute(
+        """
+        SELECT * FROM products
+        """
+    ).fetchall()
+    return [dict(row) for row in rows]
+
 
 if __name__ == "__main__":
     initial_setup()
