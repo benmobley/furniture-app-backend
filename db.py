@@ -53,6 +53,33 @@ def products_all():
     conn.close()  # Close the connection to avoid resource leaks
     return [dict(row) for row in rows]
 
+def photos_update_by_id(id, name, width, height):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        UPDATE photos SET name = ?, width = ?, height = ?
+        WHERE id = ?
+        RETURNING *
+        """,
+        (name, width, height, id),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
+
+def products_update_by_id(id, name, description, price, category):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        UPDATE products SET name = ?, description = ?, price = ?, category = ?
+        WHERE id = ?
+        RETURNING *
+        """,
+        (name, description, price, category, id),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
+
+
 def products_create(name, description, price, category):
     conn = connect_to_db()
     row = conn.execute(
@@ -64,6 +91,8 @@ def products_create(name, description, price, category):
         (name, description, price, category),
     ).fetchone()
     conn.commit()
+    
+
 def products_find_by_id(id):
     conn = connect_to_db()
     row = conn.execute(
@@ -74,6 +103,18 @@ def products_find_by_id(id):
         (id,),
     ).fetchone()
     return dict(row)
+
+def products_destroy_by_id(id):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        DELETE from products
+        WHERE id = ?
+        """,
+        (id,),
+    )
+    conn.commit()
+    return {"message": "Product destroyed successfully"}
 
 if __name__ == "__main__":
     initial_setup()
