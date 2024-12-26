@@ -27,3 +27,8 @@ def create():
 @app.route("/products/<id>.json")
 def show(id):
     return db.products_find_by_id(id)
+
+
+@app.route("/products/<id>.json", methods=["DELETE"])
+def destroy(id):
+    return db.products_destroy_by_id(id)
