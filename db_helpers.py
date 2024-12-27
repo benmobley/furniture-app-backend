@@ -105,34 +105,41 @@ def initial_setup():
 
     # Seed data
     users_seed_data = [
-        ("Alice", "alice@example.com", hash_password("password"), False, datetime.now(), datetime.now()),
-        ("Bob", "bob@example.com", hash_password("password"), True, datetime.now(), datetime.now())
+        ("Alice", "alice@example.com", "hashed_password", False, datetime.now(), datetime.now()),
+        ("Bob", "bob@example.com", "hashed_password", True, datetime.now(), datetime.now())
     ]
-
     categories_seed_data = [
         ("Electronics", datetime.now(), datetime.now()),
         ("Furniture", datetime.now(), datetime.now())
     ]
-
     products_seed_data = [
         ("Laptop", 1000, "High-performance laptop", 5, datetime.now(), datetime.now()),
         ("Chair", 150, "Comfortable office chair", 10, datetime.now(), datetime.now())
     ]
+    orders_seed_data = [
+        (1, 1150, 50, 1200, datetime.now(), datetime.now()),
+        (2, 300, 15, 315, datetime.now(), datetime.now())
+    ]
+    carted_products_seed_data = [
+        (1, 1, 1, "in_cart", None, datetime.now(), datetime.now()),
+        (2, 2, 2, "purchased", 2, datetime.now(), datetime.now())
+    ]
+    category_products_seed_data = [
+        (1, 1, datetime.now(), datetime.now()),
+        (2, 2, datetime.now(), datetime.now())
+    ]
+    images_seed_data = [
+        ("https://www.techtarget.com/rms/onlineimages/hp_elitebook_mobile.jpg", 1, datetime.now(), datetime.now()),
+        ("https://d2bl4mvd8nzejc.cloudfront.net/img/p/2/0/5/205.jpg", 2, datetime.now(), datetime.now())
+    ]
 
-    conn.executemany("""
-    INSERT INTO users (name, email, password_digest, admin, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?);
-    """, users_seed_data)
-
-    conn.executemany("""
-    INSERT INTO categories (name, created_at, updated_at)
-    VALUES (?, ?, ?);
-    """, categories_seed_data)
-
-    conn.executemany("""
-    INSERT INTO products (name, price, description, quantity, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?);
-    """, products_seed_data)
+    conn.executemany("INSERT INTO users (name, email, password_digest, admin, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)", users_seed_data)
+    conn.executemany("INSERT INTO categories (name, created_at, updated_at) VALUES (?, ?, ?)", categories_seed_data)
+    conn.executemany("INSERT INTO products (name, price, description, quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)", products_seed_data)
+    conn.executemany("INSERT INTO orders (user_id, subtotal, tax, total, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)", orders_seed_data)
+    conn.executemany("INSERT INTO carted_products (user_id, product_id, quantity, status, order_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)", carted_products_seed_data)
+    conn.executemany("INSERT INTO category_products (product_id, category_id, created_at, updated_at) VALUES (?, ?, ?, ?)", category_products_seed_data)
+    conn.executemany("INSERT INTO images (url, product_id, created_at, updated_at) VALUES (?, ?, ?, ?)", images_seed_data)
 
     conn.commit()
     print("All tables created and seeded successfully")
